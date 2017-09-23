@@ -1,6 +1,6 @@
 var app = angular.module("app", ["ui.router"]);
 
-app.constant("API_URL", "//localhost:5000");
+app.constant("API_URL", "//api.palmz.me/coesis");
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
@@ -43,7 +43,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $http
     controller: "summaryCtrl",
 	})
 
-	$locationProvider.html5Mode(false);
+	$locationProvider.html5Mode(true);
 
 });
 
