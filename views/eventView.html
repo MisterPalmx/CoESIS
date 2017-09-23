@@ -1,0 +1,35 @@
+<h4>{{ event.name || "ไม่พบข้อมูล" }}<br><small>{{ event.description }}<br>{{ event.created | date}}</small></h4>
+<div class="panel">
+	<div class="panel-body">
+    <div ng-if="!event.id">
+      <center>
+        ไม่พบข้อมูล
+        <a ui-sref="eventList">กลับไปหน้าแรก</a>
+      </center>
+    </div>
+    <div ng-if="event.id">
+      <table class="table table-striped">
+        <thead>
+          <th class="hidden-xs">#</th>
+          <th>รหัสนักศึกษา</th>
+          <th>ชื่อเล่น</th>
+          <th class="hidden-xs">ชื่อ-นามสกุล</th>
+          <th>สถานะ</th>
+          <th>หมายเหตุ</th>
+          <th><span class="hidden-xs">Facebook</span></th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="student in students | filter: search track by $index">
+            <td class="hidden-xs">{{ $index + 1 }}</td>
+            <td><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
+            <td>{{ student.nickname }}</td>
+            <td class="hidden-xs">{{ student.name }}</td>
+            <td><img src="assets/img/icon-check.png"></td>
+            <td>-</td>
+            <td><a target="_blank" href="{{ student.facebook }}"><img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+	</div>
+</div>

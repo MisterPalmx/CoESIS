@@ -1,0 +1,31 @@
+<div class="pull-right">
+  <div class="mt5 row">
+    <div class="col-xs-12"><input class="form-control" ng-model="search" placeholder="ค้นหานักศึกษา..."></div>
+  </div>
+</div>
+<h4>รายชื่อนักศึกษา</h4>
+<div class="panel">
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <th>#</th>
+        <th>รหัสนักศึกษา</th>
+        <th>ชื่อเล่น</th>
+        <th class="hidden-xs">ชื่อ-นามสกุล</th>
+        <th>เบอร์โทร</th>
+        <th><span class="hidden-xs">Facebook</span></th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="student in students | filter: search track by $index">
+          <td>{{ $index + 1 }}</td>
+          <td><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
+          <td>{{ student.nickname }}</td>
+          <td class="hidden-xs">{{ student.name }}</td>
+          <td><a href="tel:{{ student.phone }}">{{ student.phone }}</a></td>
+          <td><a target="_blank" href="{{ student.facebook }}"><img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span></a></td>
+        </tr>
+      </tbody>
+    </table>
+    <a ui-sref="studentNew" class="btn btn-info">เพิ่มข้อมูลใหม่</a>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="th" ng-app="app">
+
+<head>
+	<title>CoE Student Information System</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="assets/css/site.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+	<style media="screen">
+		#preloader { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%; overflow: visible; background: #fff url(assets/img/preloader.gif) no-repeat center center; }
+	</style>
+	<script type="text/javascript" src="assets/js/angular.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="assets/js/app.js"></script>
+</head>
+
+<body style="background-color: rgb(241, 242, 246);">
+
+	<div class="docs-header header--noBackground">
+		<nav class="navbar navbar-default navbar-custom" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+					<a class="navbar-brand" href="index.html"><img src="assets/img/logo.png" height="40"></a>
+				</div>
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a class="nav-link" ui-sref="studentList" ui-sref-active="current">รายชื่อนักศึกษา</a></li>
+						<li><a class="nav-link" ui-sref="eventList" ui-sref-active="current">อีเว้นต์</a></li>
+						<li><a class="nav-link" ui-sref="summary" ui-sref-active="current">สรุปข้อมูล</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+	<div id="preloader" ng-if="preloader"></div>
+	<div class="container documents example">
+		<ui-view>
+		</ui-view>
+	</div>
+
+</body>
+</html>

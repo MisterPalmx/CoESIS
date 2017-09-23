@@ -1,0 +1,81 @@
+<h4>ข้อมูลนักศึกษา - {{ id }}</h4>
+<div class="panel">
+	<div class="panel-body">
+    <div ng-if="!student.id">
+      <center>
+        ไม่พบข้อมูล
+        <a ui-sref="studentList">กลับไปหน้าแรก</a>
+      </center>
+    </div>
+    <div ng-if="student.id">
+			<div class="row">
+				<div class="col-md-4">
+					<label>รหัสนักศึกษา</label><br>
+					<a ui-sref="studentView({ id: id })"><span style="font-size: 18px;"><b>{{ id }}</b></span></a>
+				</div>
+				<div class="col-md-4">
+					<label>ชื่อเล่น</label><br>
+					<span style="font-size: 18px;"><b>{{ student.nickname }}</b></span>
+				</div>
+				<div class="col-md-4">
+					<label>ชื่อ-นามสกุล</label><br>
+					<span style="font-size: 18px;"><b>{{ student.name }}</b></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label>เพศ</label><br>
+					<span style="font-size: 18px;"><b>{{ student.gender }}</b></span>
+				</div>
+				<div class="col-md-4">
+					<label>เบอร์โทรศัพท์</label><br>
+					<a href="tel:{{ student.phone }}"><span style="font-size: 18px;"><b>{{ student.phone }}</b></span></a>
+				</div>
+				<div class="col-md-4">
+					<label>เบอร์โทรผู้ปกครอง</label><br>
+					<a href="tel:{{ student.phone2 }}"><span style="font-size: 18px;"><span style="font-size: 18px;"><b>{{ student.phone2 }}</b></span></a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label>ที่อยู่ปัจจุบัน</label><br>
+					<span style="font-size: 18px;"><b>{{ student.address }}</b></span>
+				</div>
+				<div class="col-md-8">
+					<label>Facebook URL</label><br>
+					<a target="_blank" href="{{ student.facebook }}"><span style="font-size: 18px;"><b>{{ student.facebook }}</b></span></a>
+				</div>
+			</div>
+    </div>
+	</div>
+</div>
+<div ng-if="event && student.id">
+  <h4>อีเว้นต์</h4>
+  <div class="panel">
+  	<div class="panel-body">
+			Coming Soon
+      <!-- <div ng-if="!event">
+        <center>
+          ไม่พบข้อมูล
+          <a ui-sref="studentList">กลับไปหน้าแรก</a>
+        </center>
+      </div>
+      <div ng-if="event">
+  			<div class="row">
+  				<div class="col-md-4">
+  					<label>รหัสนักศึกษา</label><br>
+  					<a ui-sref="studentView({ id: id })"><span style="font-size: 18px;"><b>{{ id }}</b></span></a>
+  				</div>
+  				<div class="col-md-4">
+  					<label>ชื่อเล่น</label><br>
+  					<span style="font-size: 18px;"><b>{{ student.nickname }}</b></span>
+  				</div>
+  				<div class="col-md-4">
+  					<label>ชื่อ-นามสกุล</label><br>
+  					<span style="font-size: 18px;"><b>{{ student.name }}</b></span>
+  				</div>
+  			</div>
+      </div> -->
+  	</div>
+  </div>
+</div>

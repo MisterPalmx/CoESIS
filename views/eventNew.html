@@ -1,0 +1,21 @@
+<h4>สร้างอีเว้นต์ใหม่</h4>
+<div class="panel">
+	<div class="panel-body">
+		<form ng-submit="add()">
+			<div class="row">
+				<div class="col-md-12">
+					<label>ชื่ออีเว้นต์</label>
+					<input type="text" class="form-control" ng-model="name" ng-length="30" placeholder="เงินชั้นปี 200 บาท ตุลา 60" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label>คำอธิบาย</label>
+					<textarea class="form-control" ng-model="description" ng-model="description" ng-length="100" placeholder="คำอธิบายคร่าวๆ (ไม่ต้องใส่ก็ได้)"></textarea>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-info" ng-disabled="loading">เพิ่มข้อมูล</button>
+			<button type="reset" class="btn btn-danger">รีเซ็ตข้อมูล</button>
+		</form>
+	</div>
+</div>

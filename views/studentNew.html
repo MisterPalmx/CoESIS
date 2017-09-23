@@ -1,0 +1,50 @@
+<h4>เพิ่มข้อมูลนักศึกษา</h4>
+<div class="panel">
+	<div class="panel-body">
+		<form ng-submit="add()">
+			<div class="row">
+				<div class="col-md-4">
+					<label>รหัสนักศึกษา</label>
+					<input type="text" class="form-control" ng-model="id" ng-length="10" placeholder="5835512000" required>
+				</div>
+				<div class="col-md-4">
+					<label>ชื่อเล่น</label>
+					<input type="text" class="form-control" ng-model="nickname" ng-length="20" placeholder="ใส่ชื่อเล่นหรือชื่อที่คนอื่นรู้จัก" required>
+				</div>
+				<div class="col-md-4">
+					<label>ชื่อ-นามสกุล</label>
+					<input type="text" class="form-control" ng-model="name" ng-length="30" placeholder="ชื่อ นามสกุล (ไม่ต้องมีคำนำหน้า)" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label>เพศ</label>
+					<select class="form-control" ng-model="gender" ng-init="gender = 'ชาย'" required>
+						<option value="ชาย">ชาย</option>
+						<option value="หญิง">หญิง</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label>เบอร์โทรศัพท์</label>
+					<input type="text" class="form-control" ng-model="phone" ng-length="10" placeholder="0812345678" required>
+				</div>
+				<div class="col-md-4">
+					<label>เบอร์โทรผู้ปกครอง</label>
+					<input type="text" class="form-control" ng-model="phone2" ng-length="10" placeholder="0812345678" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label>ที่อยู่ปัจจุบัน</label>
+					<input type="text" class="form-control" ng-model="address" ng-length="50" placeholder="หอชาย ห้อง A01" required>
+				</div>
+				<div class="col-md-8">
+					<label>Facebook URL</label>
+					<input type="text" class="form-control" ng-model="facebook" ng-length="50" placeholder="https://www.facebook.com/palmz.haxker" required>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-info" ng-disabled="loading">เพิ่มข้อมูล</button>
+			<button type="reset" class="btn btn-danger">รีเซ็ตข้อมูล</button>
+		</form>
+	</div>
+</div>
