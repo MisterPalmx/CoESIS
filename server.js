@@ -99,40 +99,6 @@ app.post('/student/new', (req, res) => {
   })
 })
 
-// app.get('/student/:id', (req, res) => {
-//   var connection,
-//     id = req.params.id,
-//     student = {};
-//   async.series([
-//     (callback) => {
-//       conn.getConnection((err, response) => {
-//         if (err) return callback(err);
-//         connection = response;
-//         callback();
-//       })
-//     },
-//     (callback) => {
-//       connection.query('select * from student where id = ' + mysql.escape(id), (err, response) => {
-//         if (err) return callback(err);
-//         student = response[0];
-//         callback();
-//       })
-//     }
-//   ], (err) => {
-//     if (connection) connection.release();
-//     if (err) return res.json({
-//       success: false,
-//       message: err
-//     })
-//     res.json({
-//       success: true,
-//       data: {
-//           student: student
-//       }
-//     })
-//   })
-// })
-
 app.get('/event', (req, res) => {
   var connection,
     events = [],
@@ -171,7 +137,7 @@ app.get('/event', (req, res) => {
       message: err
     })
     events.forEach((event) => {
-      event.password = (event.password == null) // Use boolean instead of showing password
+      event.password = (event.password != null) // Use boolean instead of showing password
       event.participants = [];
       participants.forEach((participant) => {
         if (participant.event_id == event.id)
@@ -196,7 +162,8 @@ app.get('/event', (req, res) => {
 app.post('/event/new', (req, res) => {
   var connection,
     name = req.body.name,
-    description = req.body.description;
+    description = req.body.description,
+    password = req.body.password;
 
   async.series([
     (callback) => {
@@ -207,8 +174,8 @@ app.post('/event/new', (req, res) => {
       })
     },
     (callback) => {
-      connection.query('insert into event (name, description, created) values (?, ?, now())',
-      [ name, description ],
+      connection.query('insert into event (name, description, password, created) values (?, ?, ?, now())',
+        [ name, description, password ],
       (err, response) => {
         if (err) return callback(err);
         callback();
@@ -226,12 +193,14 @@ app.post('/event/new', (req, res) => {
   })
 })
 
-app.post('/event/:id', (req, res) => {
+app.post('/event/:id/:type(check|remark)', (req, res) => {
   var connection,
     id = req.params.id,
+    type = req.params.type,
+    student_id = req.body.student_id,
     status = req.body.status,
+    remark = req.body.remark,
     password = req.body.password;
-
   async.series([
     (callback) => {
       conn.getConnection((err, response) => {
@@ -241,20 +210,28 @@ app.post('/event/:id', (req, res) => {
       })
     },
     (callback) => {
-      connection.query('select 1 from event where id = ?',
-      [ id ],
+      connection.query('select * from event where id = ?',
+        [ id ],
       (err, response) => {
         if (err) return callback(err);
-        if (!response.length) return callback('ไม่พบ Event ดังกล่าว!');
-        if (response[0].password != password) return callback('Password ไม่ถูกต้อง!');
+        if (!response.length) return callback('ไม่พบ Event ดังกล่าว');
+        if (response[0].password && response[0].password != password) return callback('Password ไม่ถูกต้อง');
+        callback();
       })
     },
-    (callback) => {      
-      connection.query('update event set status = ? where id = ?',
-        [ status, id ],
-      (err, response) => {
-        callback(err || null);
-      });
+    (callback) => {
+      if (type == 'check')
+        connection.query('insert into participant (event_id, student_id, status, addtime) values (?, ?, ?, now()) on duplicate key update status = ?',
+          [ id, student_id, status, status ],
+        (err, response) => {
+          callback(err || null);
+        });
+      else if (type == 'remark')
+        connection.query('insert into participant (event_id, student_id, remark, addtime) values (?, ?, ?, now()) on duplicate key update remark = ?',
+          [ id, student_id, remark, remark ],
+        (err, response) => {
+          callback(err || null);
+        });
     }
   ], (err) => {
     if (connection) connection.release();
@@ -262,6 +239,7 @@ app.post('/event/:id', (req, res) => {
       success: false,
       message: err
     })
+    console.log(student_id + ' update event#' + id + ' (status = ' + status + ', remark = ' + remark + ')')
     res.json({
       success: true
     })

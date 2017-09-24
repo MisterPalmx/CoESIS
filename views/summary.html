@@ -1,6 +1,32 @@
+<div class="pull-right">
+  <div class="mt7 form-search search-only">
+    <i class="search-icon glyphicon glyphicon-search"></i>
+    <input type="text" ng-model="search" class="form-control search-query">
+  </div>
+</div>
 <h4>สรุปข้อมูล</h4>
 <div class="panel">
-  <div class="panel-body">
-    Coming Soon
+  <div class="panel-body table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <th>#</th>
+        <th>รหัสนักศึกษา</th>
+        <th>ชื่อเล่น</th>
+        <th ng-repeat="event in events">{{ event.name }}</th>
+        <th><span class="hidden-xs">Facebook</span></th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="student in students | filter: search track by $index">
+          <td>{{ $index + 1 }}</td>
+          <td><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
+          <td>{{ student.nickname }}</td>
+          <td ng-repeat="event in events">
+            <img src="assets/img/icon-check.png" ng-if="joinedThisEvent(student.id, event.id)">
+            <img src="assets/img/icon-cross.png" ng-if="!joinedThisEvent(student.id, event.id)">
+          </td>
+          <td><a target="_blank" href="{{ student.facebook }}"><img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span></a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

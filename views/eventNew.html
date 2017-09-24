@@ -14,6 +14,12 @@
 					<textarea class="form-control" ng-model="description" ng-model="description" ng-length="100" placeholder="คำอธิบายคร่าวๆ (ไม่ต้องใส่ก็ได้)"></textarea>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label>รหัสผ่าน</label>
+					<input type="text" class="form-control" ng-model="password" ng-length="20" placeholder="ป้องกันคนอื่นมาแก้ไข">
+				</div>
+			</div>
 			<button type="submit" class="btn btn-info" ng-disabled="loading">เพิ่มข้อมูล</button>
 			<button type="reset" class="btn btn-danger">รีเซ็ตข้อมูล</button>
 		</form>

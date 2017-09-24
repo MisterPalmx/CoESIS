@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="th" ng-app="app">
 <head>
-	<title>CoE Student Information System</title>	
-	<base href="/coe/">
+	<title>CoE Student Information System</title>
+	<base href="/CoESIS/">
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="assets/css/site.min.css">
@@ -18,18 +18,18 @@
 <body style="background-color: rgb(241, 242, 246);">
 
 	<div class="docs-header header--noBackground">
-		<nav class="navbar navbar-default navbar-custom" role="navigation">
+		<nav class="navbar navbar-default navbar-custom" role="navigation" ng-init="collapse = false">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-					<a class="navbar-brand" href="index.html"><img src="assets/img/logo.png" height="40"></a>
+					<button type="button" class="navbar-toggle" ng-click="collapse = !collapse">
+	          <span class="sr-only">Toggle navigation</span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+					<a class="navbar-brand" ui-sref="studentList"><img src="assets/img/logo.png" height="40"></a>
 				</div>
-				<div class="collapse navbar-collapse">
+				<div class="collapse navbar-collapse" ng-class="{ 'in': collapse }">
 					<ul class="nav navbar-nav navbar-right">
 						<li><a class="nav-link" ui-sref="studentList" ui-sref-active="current">รายชื่อนักศึกษา</a></li>
 						<li><a class="nav-link" ui-sref="eventList" ui-sref-active="current">อีเว้นต์</a></li>

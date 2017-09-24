@@ -1,23 +1,30 @@
+<div class="pull-right">
+  <div class="mt7 form-search search-only">
+    <i class="search-icon glyphicon glyphicon-search"></i>
+    <input type="text" ng-model="search" class="form-control search-query">
+  </div>
+</div>
 <h4>อีเว้นต์</h4>
 <div class="panel">
-  <div class="panel-body">
-    <table class="table table-striped">
-      <thead>
-        <th>วันที่</th>
-        <th>ชื่ออีเว้นต์</th>
-        <th class="hidden-sm">คำอธิบาย</th>
-        <th>ผู้เข้าร่วม</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="event in events | filter: search">
-          <td>{{ event.created | date }}</td>
-          <td><a ui-sref="eventView({ id: event.id })">{{ event.name }}</a></td>
-          <td class="hidden-sm">{{ event.description || '-' }}</td>
-          <td>100 (100.00 %)</td>
-        </tr>
-      </tbody>
-    </table>
-    <center></center>
+  <div class="panel-body table-responsive">
+    <p>
+      <table class="table table-striped">
+        <thead>
+          <th>ชื่ออีเว้นต์</th>
+          <th class="hidden-sm">คำอธิบาย</th>
+          <th>ผู้เข้าร่วม</th>
+          <th>วันทีเริ่ม</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="event in events | filter: search">
+            <td><a ui-sref="eventView({ id: event.id })">{{ event.name }}</a></td>
+            <td class="hidden-sm">{{ event.description || '-' }}</td>
+            <td>{{ getParticipantsLength(event.participants) }}/{{ students.length }} ({{ getParticipantsLength(event.participants) * 100 / students.length | number:2 }}%)</td>
+            <td>{{ event.created | date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </p>
     <a ui-sref="eventNew" class="btn btn-large btn-info">เพิ่มอีเว้นต์ใหม่</a>
   </div>
 </div>

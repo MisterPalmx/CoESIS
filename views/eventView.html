@@ -1,4 +1,10 @@
-<h4>{{ event.name || "ไม่พบข้อมูล" }}<br><small>{{ event.description }}<br>{{ event.created | date}}</small></h4>
+<div class="pull-right">
+  <div class="mt7 form-search search-only">
+    <i class="search-icon glyphicon glyphicon-search"></i>
+    <input type="text" ng-model="search" class="form-control search-query">
+  </div>
+</div>
+<h4>{{ event.name || "ไม่พบข้อมูล" }}<br><small class="hidden-xs">{{ event.description }}<br>{{ event.created | date}}</small></h4>
 <div class="panel">
 	<div class="panel-body">
     <div ng-if="!event.id">
@@ -24,8 +30,8 @@
             <td><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
             <td>{{ student.nickname }}</td>
             <td class="hidden-xs">{{ student.name }}</td>
-            <td><input type="checkbox" ng-model="status" ng-change="check(status)" ng-checked="getStatus(student.id, $event)"></td>
-            <td>{{ getRemark(student.id) || '-' }}</td>
+            <td><input type="checkbox" ng-model="status" ng-change="check(student.id, status)" ng-checked="getStatus(student.id)"></td>
+            <td><a href ng-click="remark(student.id)">{{ getRemark(student.id) || 'เพิ่ม' }}</a></td>
             <td><a target="_blank" href="{{ student.facebook }}"><img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span></a></td>
           </tr>
         </tbody>

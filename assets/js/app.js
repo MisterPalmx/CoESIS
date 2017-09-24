@@ -1,6 +1,6 @@
 var app = angular.module("app", ["ui.router"]);
 
-app.constant("API_URL", "https://api.palmz.me/coesis");
+app.constant("API_URL", "//localhost:5000");
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
@@ -126,6 +126,7 @@ app.controller("studentViewCtrl", function($rootScope, $scope, $http, API_URL, $
 	$scope.id = $stateParams.id;
 	$scope.student = {};
 	$scope.event = {};
+	$scope.myEvents = [];
 
 	$scope.$watch('$root.students', function() {
 		angular.forEach($rootScope.students, function(student) {
@@ -134,10 +135,40 @@ app.controller("studentViewCtrl", function($rootScope, $scope, $http, API_URL, $
 		});
 	});
 
+	$scope.$watch('$root.events', function() {
+		angular.forEach($rootScope.events, function(event) {
+			var myEvent = {
+				id: event.id,
+				name: event.name,
+				description: event.description,
+				created: event.created,
+				status: 0,
+				remark: null,
+				addtime: null,
+			};
+			angular.forEach(event.participants, function(participant) {
+				if (participant.student_id == $scope.id) {
+					myEvent.status = participant.status;
+					myEvent.remark = participant.remark;
+					if (participant.status)
+						myEvent.addtime = participant.addtime;
+				}
+			});
+			$scope.myEvents.push(myEvent);
+		});
+	});
+
 });
 
 app.controller("eventListCtrl", function($rootScope, $scope, $http, API_URL, $window, $state) {
-
+	$scope.getParticipantsLength = function(participants) {
+		var i = 0;
+		angular.forEach(participants, function(participant) {
+			if (participant.status)
+				i++;
+		});
+		return i;
+	}
 });
 
 app.controller("eventNewCtrl", function($rootScope, $scope, $http, API_URL, $window, $state) {
@@ -146,6 +177,7 @@ app.controller("eventNewCtrl", function($rootScope, $scope, $http, API_URL, $win
 		$http.post(API_URL + "/event/new", {
 			name: $scope.name,
 			description: $scope.description,
+			password: $scope.password
 		})
 		.success(function(response) {
 			$scope.loading = false;
@@ -187,25 +219,66 @@ app.controller("eventViewCtrl", function($rootScope, $scope, $http, API_URL, $wi
 		});
 		return status;
 	}
-	$scope.check = function(status, event) {
+	$scope.check = function(id, status) {
 		var password = null;
 		if ($scope.event.password)
-			password = prompt("Password", "");
-
-		$http.post(API_URL + "/event/" + $scope.event.id, {
+			password = prompt("รหัสผ่าน", "");
+		$http.post(API_URL + "/event/" + $scope.event.id + "/check", {
+			student_id: id,
 			status: status,
 			password: password,
 		})
 		.success(function(response) {
 			$scope.loading = false;
 			if (response.success) {
-
+				// $rootScope.preloader = true; reload in background
+				$http.get(API_URL + "/event")
+				.success(function(response) {
+					// $rootScope.preloader = false;
+					if (response.success) {
+						$rootScope.events = response.data.events;
+					}
+				});
 			} else {
 				alert("Error! " + response.message);
-				event.preventDefault();
+				$state.reload(); // reload checkbox
 			}
 		})
 	}
+	$scope.remark = function(id) {
+		var password = null,
+			remark = null;
+		if ($scope.event.password) {
+			password = prompt("รหัสผ่าน", "");
+			if (!password)
+				return;
+		}
+		if (!(remark = prompt("หมายเหตุ", "")))
+			remark = null;
+
+		$http.post(API_URL + "/event/" + $scope.event.id + "/remark", {
+			student_id: id,
+			remark: remark,
+			password: password,
+		})
+		.success(function(response) {
+			$scope.loading = false;
+			if (response.success) {
+				// $rootScope.preloader = true; reload in background
+				$http.get(API_URL + "/event")
+				.success(function(response) {
+					// $rootScope.preloader = false;
+					if (response.success) {
+						$rootScope.events = response.data.events;
+					}
+				});
+			} else {
+				alert("Error! " + response.message);
+				$state.reload(); // reload checkbox
+			}
+		})
+	}
+
 	$scope.$watch('$root.events', function() {
 		angular.forEach($rootScope.events, function(event) {
 			if (event.id == $scope.id)
@@ -216,5 +289,19 @@ app.controller("eventViewCtrl", function($rootScope, $scope, $http, API_URL, $wi
 
 
 app.controller("summaryCtrl", function($rootScope, $scope, $http, API_URL, $window, $state) {
+
+	$scope.joinedThisEvent = function(student_id, event_Id) {
+		var status = 0;
+		angular.forEach($rootScope.events, function(event) {
+			if (event.id == event_Id) {
+				angular.forEach(event.participants, function(participant) {
+					if (participant.student_id == student_id) {
+						status = participant.status;
+					}
+				});
+			}
+		});
+		return status;
+	};
 
 });

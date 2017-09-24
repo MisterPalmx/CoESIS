@@ -49,33 +49,33 @@
     </div>
 	</div>
 </div>
-<div ng-if="event && student.id">
+<div ng-if="student.id">
   <h4>อีเว้นต์</h4>
   <div class="panel">
-  	<div class="panel-body">
-			Coming Soon
-      <!-- <div ng-if="!event">
-        <center>
-          ไม่พบข้อมูล
-          <a ui-sref="studentList">กลับไปหน้าแรก</a>
-        </center>
-      </div>
-      <div ng-if="event">
-  			<div class="row">
-  				<div class="col-md-4">
-  					<label>รหัสนักศึกษา</label><br>
-  					<a ui-sref="studentView({ id: id })"><span style="font-size: 18px;"><b>{{ id }}</b></span></a>
-  				</div>
-  				<div class="col-md-4">
-  					<label>ชื่อเล่น</label><br>
-  					<span style="font-size: 18px;"><b>{{ student.nickname }}</b></span>
-  				</div>
-  				<div class="col-md-4">
-  					<label>ชื่อ-นามสกุล</label><br>
-  					<span style="font-size: 18px;"><b>{{ student.name }}</b></span>
-  				</div>
-  			</div>
-      </div> -->
+  	<div class="panel-body table-responsive">
+			<table class="table table-striped">
+	      <thead>
+	        <th>ชื่ออีเว้นต์</th>
+	        <th class="hidden-xs hidden-sm">คำอธิบาย</th>
+	        <th>สถานะ</th>
+					<th>หมายเหตุ</th>
+		      <th>วันทีเริ่ม</th>
+					<th>วันทีเข้าร่วม</th>
+	      </thead>
+	      <tbody>
+	        <tr ng-repeat="myEvent in myEvents">
+	          <td><a ui-sref="eventView({ id: myEvent.id })">{{ myEvent.name }}</a></td>
+	          <td class="hidden-xs hidden-sm">{{ myEvent.description || '-' }}</td>
+	          <td>
+							<img src="assets/img/icon-check.png" ng-if="myEvent.status">
+            	<img src="assets/img/icon-cross.png" ng-if="!myEvent.status">
+						</td>
+						<td>{{ myEvent.remark || "-" }}</td>
+		        <td>{{ myEvent.created | date }}</td>
+						<td>{{ (myEvent.addtime | date) || "-" }}</td>
+	        </tr>
+	      </tbody>
+	    </table>
   	</div>
   </div>
 </div>
