@@ -1,6 +1,6 @@
 var app = angular.module("app", ["ui.router"]);
 
-app.constant("API_URL", "//api.palmz.me/coesis");
+app.constant("API_URL", "https://api.palmz.me/coesis");
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
@@ -171,6 +171,41 @@ app.controller("eventViewCtrl", function($rootScope, $scope, $http, API_URL, $wi
 	$scope.id = $stateParams.id;
 	$scope.event = {};
 
+	$scope.getRemark = function(id) {
+		var remark = null;
+		angular.forEach($scope.event.participants, function(participant) {
+			if (participant.student_id == id)
+				remark = participant.remark;
+		});
+		return remark;
+	}
+	$scope.getStatus = function(id) {
+		var status = 0;
+		angular.forEach($scope.event.participants, function(participant) {
+			if (participant.student_id == id)
+				status = participant.status;
+		});
+		return status;
+	}
+	$scope.check = function(status, event) {
+		var password = null;
+		if ($scope.event.password)
+			password = prompt("Password", "");
+
+		$http.post(API_URL + "/event/" + $scope.event.id, {
+			status: status,
+			password: password,
+		})
+		.success(function(response) {
+			$scope.loading = false;
+			if (response.success) {
+
+			} else {
+				alert("Error! " + response.message);
+				event.preventDefault();
+			}
+		})
+	}
 	$scope.$watch('$root.events', function() {
 		angular.forEach($rootScope.events, function(event) {
 			if (event.id == $scope.id)
