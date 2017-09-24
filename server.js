@@ -174,7 +174,12 @@ app.get('/event', (req, res) => {
       event.participants = [];
       participants.forEach((participant) => {
         if (participant.event_id == event.id)
-          event.participants.push(participant);
+          event.participants.push({
+            student_id: participant.student_id,
+            status: participant.status,
+            remark: participant.remark,
+            addtime: participant.addtime
+          }); // Unnescessary to push event_id
       })
     })
     res.json({
