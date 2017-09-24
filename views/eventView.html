@@ -24,8 +24,8 @@
             <td><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
             <td>{{ student.nickname }}</td>
             <td class="hidden-xs">{{ student.name }}</td>
-            <td><img src="assets/img/icon-check.png"></td>
-            <td>-</td>
+            <td><input type="checkbox" ng-model="status" ng-change="check(status)" ng-checked="getStatus(student.id, $event)"></td>
+            <td>{{ getRemark(student.id) || '-' }}</td>
             <td><a target="_blank" href="{{ student.facebook }}"><img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span></a></td>
           </tr>
         </tbody>
