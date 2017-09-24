@@ -1,26 +1,38 @@
 <h4>สร้างอีเว้นต์ใหม่</h4>
 <div class="panel">
 	<div class="panel-body">
-		<form ng-submit="add()">
+		<form ng-submit="add()" name="form">
 			<div class="row">
 				<div class="col-md-12">
-					<label>ชื่ออีเว้นต์</label>
-					<input type="text" class="form-control" ng-model="name" ng-length="30" placeholder="เงินชั้นปี 200 บาท ตุลา 60" required>
+					<div class="form-group" ng-class="{ 'has-feedback has-error': form.name.$invalid && !form.name.$pristine, 'has-feedback has-success': form.name.$valid }">
+						<label>ชื่ออีเว้นต์</label>
+						<input type="text" class="form-control" name="name" ng-model="name" ng-maxlength="30" placeholder="เงินชั้นปี 200 บาท ตุลา 60" required>
+						<span class="glyphicon glyphicon-remove form-control-feedback" ng-if="form.name.$invalid && !form.name.$pristine"></span>
+						<span class="glyphicon glyphicon-ok form-control-feedback" ng-if="form.name.$valid"></span>
+					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<label>คำอธิบาย</label>
-					<textarea class="form-control" ng-model="description" ng-model="description" ng-length="100" placeholder="คำอธิบายคร่าวๆ (ไม่ต้องใส่ก็ได้)"></textarea>
+					<div class="form-group" ng-class="{ 'has-feedback has-error': form.description.$invalid && !form.description.$pristine, 'has-feedback has-success': form.description.$valid && !form.description.$pristine }">
+						<label>คำอธิบาย</label>
+						<textarea class="form-control" name="description" ng-model="description" ng-model="description" ng-maxlength="100" placeholder="คำอธิบายคร่าวๆ (ไม่ต้องใส่ก็ได้)"></textarea>
+						<span class="glyphicon glyphicon-remove form-control-feedback" ng-if="form.description.$invalid && !form.description.$pristine"></span>
+						<span class="glyphicon glyphicon-ok form-control-feedback" ng-if="form.description.$valid && !form.description.$pristine"></span>
+					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<label>รหัสผ่าน</label>
-					<input type="text" class="form-control" ng-model="password" ng-length="20" placeholder="ป้องกันคนอื่นมาแก้ไข">
+					<div class="form-group" ng-class="{ 'has-feedback has-error': form.password.$invalid && !form.password.$pristine, 'has-feedback has-success': form.password.$valid && !form.password.$pristine }">
+						<label>รหัสผ่าน</label>
+						<input type="text" class="form-control" name="password" ng-model="password" ng-maxlength="20" placeholder="ป้องกันคนอื่นมาแก้ไข">
+						<span class="glyphicon glyphicon-remove form-control-feedback" ng-if="form.password.$invalid && !form.password.$pristine"></span>
+						<span class="glyphicon glyphicon-ok form-control-feedback" ng-if="form.password.$valid && !form.password.$pristine"></span>
+					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-info" ng-disabled="loading">เพิ่มข้อมูล</button>
+			<button type="submit" class="btn btn-info" ng-disabled="loading || form.$invalid">เพิ่มข้อมูล</button>
 			<button type="reset" class="btn btn-danger">รีเซ็ตข้อมูล</button>
 		</form>
 	</div>
