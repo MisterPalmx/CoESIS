@@ -33,7 +33,7 @@
 				</div>
 				<div class="col-md-4">
 					<label>เบอร์โทรฉุกเฉิน</label><br>
-					<a href="tel:{{ student.phone2 }}"><span style="font-size: 18px;"><span style="font-size: 18px;"><b>{{ student.phone2 }}</b></span></a>
+					<a href="tel:{{ student.phone2 || '-' }}"><span style="font-size: 18px;"><span style="font-size: 18px;"><b>{{ student.phone2 }}</b></span></a>
 				</div>
 			</div>
 			<div class="row">
@@ -61,18 +61,24 @@
 					<th>หมายเหตุ</th>
 		      <th>วันทีเริ่ม</th>
 					<th>วันทีเข้าร่วม</th>
+					<th>เครื่องมือ</th>
 	      </thead>
 	      <tbody>
-	        <tr ng-repeat="myEvent in myEvents">
-	          <td><a ui-sref="eventView({ id: myEvent.id })">{{ myEvent.name }}</a></td>
-	          <td class="hidden-xs hidden-sm">{{ myEvent.description || '-' }}</td>
+	        <tr ng-repeat="event in events">
+	          <td><a ui-sref="eventView({ id: event.id })">{{ event.name }}</a></td>
+	          <td class="hidden-xs hidden-sm">{{ event.description || '-' }}</td>
 	          <td>
-							<img src="assets/img/icon-check.png" ng-if="myEvent.status">
-            	<img src="assets/img/icon-cross.png" ng-if="!myEvent.status">
+							<img src="assets/img/icon-check.png" ng-if="getDataByStudent(event, student).status">
+            	<img src="assets/img/icon-cross.png" ng-if="!getDataByStudent(event, student).status">
 						</td>
-						<td>{{ myEvent.remark || "-" }}</td>
-		        <td>{{ myEvent.created | date }}</td>
-						<td>{{ (myEvent.addtime | date) || "-" }}</td>
+						<td>{{ getDataByStudent(event, student).remark || "-" }}</td>
+		        <td>{{ event.created | date }}</td>
+						<td>{{ (getDataByStudent(event, student).addtime | date) || "-" }}</td>
+						<td>
+							<a href ng-click="updateEvent(event, student)">
+								<button type="button" class="btn btn-success btn-xs"><img src="assets/img/icon-edit.png"> แก้ไข</button>
+							</a>
+						</td>
 	        </tr>
 	      </tbody>
 	    </table>

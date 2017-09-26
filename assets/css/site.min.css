@@ -3,3 +3,7 @@
 .mt7 {
   margin-top: 7px;
 }
+
+.modal, .modal-backdrop {
+  z-index: 99999 !important;
+}

@@ -17,26 +17,44 @@
       <table class="table table-striped">
         <thead>
           <th class="hidden-xs">#</th>
-          <th class="hidden-xs">รหัสนักศึกษา</th>
-          <th class="visible-xs">รหัส</th>
-          <th>ชื่อเล่น</th>
+          <th>
+            <span class="visible-xs">รหัส</span>
+            <span class="hidden-xs">รหัสนักศึกษา</span>
+          </th>
+          <th>
+            <span class="visible-xs">ชื่อ</span>
+            <span class="hidden-xs">ชื่อเล่น</span>
+          </th>
           <th class="hidden-xs">ชื่อ-นามสกุล</th>
           <th>สถานะ</th>
-          <th class="hidden-xs">วันที่เข้าร่วม</th>
           <th>หมายเหตุ</th>
-          <th><span class="hidden-xs">Facebook</span></th>
+          <th><span>เครื่องมือ</span></th>
         </thead>
         <tbody>
           <tr ng-repeat="student in students | filter: search track by $index">
             <td class="hidden-xs">{{ $index + 1 }}</td>
-            <td class="hidden-xs"><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
-            <td class="visible-xs"><a ui-sref="studentView({ id: student.id })">{{ student.id.slice(-3) }}</a></td>
+            <td>
+              <a class="hidden-xs" ui-sref="studentView({ id: student.id })">{{ student.id }}</a>
+              <a class="visible-xs" ui-sref="studentView({ id: student.id })">{{ student.id.slice(-3) }}</a>
+            </td>
             <td>{{ student.nickname }}</td>
             <td class="hidden-xs">{{ student.name }}</td>
-            <td><input type="checkbox" ng-model="status" ng-change="check(student.id, status)" ng-checked="getStatus(student.id)"></td>
-            <td class="hidden-xs">{{ (getAddTime(student.id) | date) || "-" }}</td>
-            <td><a href ng-click="remark(student.id)">{{ getRemark(student.id) || 'เพิ่ม' }}</a></td>
-            <td><a target="_blank" href="{{ student.facebook }}"><img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span></a></td>
+            <td>
+              <img src="assets/img/icon-check.png" ng-if="getDataByStudent(event, student).status">
+            	<img src="assets/img/icon-cross.png" ng-if="!getDataByStudent(event, student).status">
+            </td>
+            <td>{{ getDataByStudent(event, student).remark || '-' }}</td>
+            <td>
+              <span class="text-nowrap">
+                <a href ng-click="updateEvent(event, student)">
+                  <button type="button" class="btn btn-success btn-xs"><img src="assets/img/icon-edit.png"> แก้ไข</button>
+                </a>
+                <a target="_blank" href="{{ student.facebook }}">
+                  <img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span>
+                </a>
+              </span>
+
+            </td>
           </tr>
         </tbody>
       </table>

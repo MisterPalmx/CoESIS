@@ -1,0 +1,50 @@
+<form ng-submit="update()" name="form">
+  <div class="modal-content">
+    <div class="modal-header">
+      <a class="close" href ng-click="close()">×</a>
+      <h4 class="modal-title">{{ event.name }}</h4>
+    </div>
+    <div class="modal-body">
+      <p>{{ student.name }} ({{ student.id }})</p>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">สถานะ</label>
+            <div class="row">
+              <div class="col-xs-3">
+                <input type="radio" ng-model="formData.status" value="1"> <img src="assets/img/icon-check.png">
+              </div>
+              <div class="col-xs-3">
+                <input type="radio" ng-model="formData.status" value="0"> <img src="assets/img/icon-cross.png">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group" ng-class="{ 'has-feedback has-error': form.remark.$invalid && !form.remark.$pristine, 'has-feedback has-success': form.remark.$valid && !form.remark.$pristine }">
+            <label class="control-label">หมายเหตุ</label>
+            <input type="text" class="form-control" name="remark" ng-model="formData.remark" ng-maxlength="50" placeholder="หมายเหตุ (ไม่ต้องใส่ก็ได้)">
+            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="form.remark.$invalid && !form.remark.$pristine"></span>
+            <span class="glyphicon glyphicon-ok form-control-feedback" ng-if="form.remark.$valid && !form.remark.$pristine"></span>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-if="event.password">
+        <div class="col-md-12">
+          <div class="form-group" ng-class="{ 'has-feedback has-error': form.password.$invalid && !form.password.$pristine, 'has-feedback has-success': form.password.$valid }">
+            <label class="control-label">รหัสผ่าน</label>
+            <input type="password" class="form-control" name="password" ng-model="formData.password" ng-maxlength="20" placeholder="ต้องใส่รหัสผ่านเพื่อแก้ไข" required>
+            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="form.password.$invalid && !form.password.$pristine"></span>
+            <span class="glyphicon glyphicon-ok form-control-feedback" ng-if="form.password.$valid"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" ng-click="close()">ยกเลิก</button>
+      <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">แก้ไข</button>
+    </div>
+  </div>
+</form>

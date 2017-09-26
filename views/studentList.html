@@ -6,14 +6,19 @@
 </div>
 <h4>รายชื่อนักศึกษา</h4>
 <div class="panel">
-  <div class="panel-body table-responsive">    
+  <div class="panel-body table-responsive">
     <p>
       <table class="table table-striped">
         <thead>
           <th>#</th>
-          <th class="hidden-xs">รหัสนักศึกษา</th>
-          <th class="visible-xs">รหัส</th>
-          <th>ชื่อเล่น</th>
+          <th>
+            <span class="visible-xs">รหัส</span>
+            <span class="hidden-xs">รหัสนักศึกษา</span>
+          </th>
+          <th>
+            <span class="visible-xs">ชื่อ</span>
+            <span class="hidden-xs">ชื่อเล่น</span>
+          </th>
           <th class="hidden-xs">ชื่อ-นามสกุล</th>
           <th>เบอร์โทร</th>
           <th><span class="hidden-xs">Facebook</span></th>
@@ -21,8 +26,10 @@
         <tbody>
           <tr ng-repeat="student in students | filter: search track by $index">
             <td>{{ $index + 1 }}</td>
-            <td class="hidden-xs"><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
-            <td class="visible-xs"><a ui-sref="studentView({ id: student.id })">{{ student.id.slice(-3) }}</a></td>
+            <td>
+              <a class="hidden-xs" ui-sref="studentView({ id: student.id })">{{ student.id }}</a>
+              <a class="visible-xs" ui-sref="studentView({ id: student.id })">{{ student.id.slice(-3) }}</a>
+            </td>
             <td>{{ student.nickname }}</td>
             <td class="hidden-xs">{{ student.name }}</td>
             <td><a href="tel:{{ student.phone }}">{{ student.phone }}</a></td>

@@ -26,7 +26,7 @@
 				<div class="col-md-12">
 					<div class="form-group" ng-class="{ 'has-feedback has-error': form.password.$invalid && !form.password.$pristine, 'has-feedback has-success': form.password.$valid && !form.password.$pristine }">
 						<label>รหัสผ่าน</label>
-						<input type="text" class="form-control" name="password" ng-model="password" ng-maxlength="20" placeholder="ป้องกันคนอื่นมาแก้ไข">
+						<input type="password" class="form-control" name="password" ng-model="password" ng-maxlength="20" placeholder="ป้องกันคนอื่นมาแก้ไข">
 						<span class="glyphicon glyphicon-remove form-control-feedback" ng-if="form.password.$invalid && !form.password.$pristine"></span>
 						<span class="glyphicon glyphicon-ok form-control-feedback" ng-if="form.password.$valid && !form.password.$pristine"></span>
 					</div>
