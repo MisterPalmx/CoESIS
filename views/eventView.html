@@ -21,6 +21,7 @@
           <th>ชื่อเล่น</th>
           <th class="hidden-xs">ชื่อ-นามสกุล</th>
           <th>สถานะ</th>
+          <th>วันที่เข้าร่วม</th>
           <th>หมายเหตุ</th>
           <th><span class="hidden-xs">Facebook</span></th>
         </thead>
@@ -31,6 +32,7 @@
             <td>{{ student.nickname }}</td>
             <td class="hidden-xs">{{ student.name }}</td>
             <td><input type="checkbox" ng-model="status" ng-change="check(student.id, status)" ng-checked="getStatus(student.id)"></td>
+            <td>{{ (getAddTime(student.id) | date) || "-" }}</td>
             <td><a href ng-click="remark(student.id)">{{ getRemark(student.id) || 'เพิ่ม' }}</a></td>
             <td><a target="_blank" href="{{ student.facebook }}"><img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span></a></td>
           </tr>

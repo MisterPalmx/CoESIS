@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var config = require('config')
 var app = express();
 
+console.log('Server is running on ' + (process.env.NODE_ENV || 'development') + ' mode')
 
 var dbConfig = config.get('database'),
   appConfig = config.get('app');
@@ -12,7 +13,6 @@ var dbConfig = config.get('database'),
 app.listen(appConfig.port, () => {
   console.log('Server is listening on port ' + appConfig.port)
 });
-
 
 var conn = mysql.createPool({
   host: dbConfig.host,

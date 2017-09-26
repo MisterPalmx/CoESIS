@@ -219,10 +219,21 @@ app.controller("eventViewCtrl", function($rootScope, $scope, $http, API_URL, $wi
 		});
 		return status;
 	}
+	$scope.getAddTime = function(id) {
+		var addtime = null;
+		angular.forEach($scope.event.participants, function(participant) {
+			if (participant.student_id == id && participant.status)
+				addtime = participant.addtime;
+		});
+		return addtime;
+	}
 	$scope.check = function(id, status) {
 		var password = null;
-		if ($scope.event.password)
+		if ($scope.event.password) {
 			password = prompt("รหัสผ่าน", "");
+			if (!password)
+				return;
+		}
 		$http.post(API_URL + "/event/" + $scope.event.id + "/check", {
 			student_id: id,
 			status: status,
