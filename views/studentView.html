@@ -43,7 +43,9 @@
 				</div>
 				<div class="col-md-8">
 					<label>Facebook URL</label><br>
-					<a target="_blank" href="{{ student.facebook }}"><span style="font-size: 18px;"><b>{{ student.facebook }}</b></span></a>
+					<div style="font-size: 18px; word-wrap: break-word;">
+						<a target="_blank" href="{{ student.facebook }}"><b>{{ student.facebook }}</b></a>
+					</div>
 				</div>
 			</div>
     </div>
@@ -53,7 +55,7 @@
   <h4>อีเว้นต์</h4>
   <div class="panel">
   	<div class="panel-body table-responsive">
-			<table class="table table-striped">
+			<table class="table table-striped text-nowrap">
 	      <thead>
 	        <th>ชื่ออีเว้นต์</th>
 	        <th class="hidden-xs hidden-sm">คำอธิบาย</th>

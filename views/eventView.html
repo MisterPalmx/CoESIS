@@ -6,7 +6,7 @@
 </div>
 <h4>{{ event.name || "ไม่พบข้อมูล" }}<br><small class="hidden-xs">{{ event.description }}<br>{{ event.created | date}}</small></h4>
 <div class="panel">
-	<div class="panel-body table-responsive">
+  <div class="panel-body table-responsive">
     <div ng-if="!event.id">
       <center>
         ไม่พบข้อมูล
@@ -14,7 +14,7 @@
       </center>
     </div>
     <div ng-if="event.id">
-      <table class="table table-striped">
+      <table class="table table-striped text-nowrap">
         <thead>
           <th class="hidden-xs">#</th>
           <th>
@@ -22,8 +22,8 @@
             <span class="hidden-xs">รหัสนักศึกษา</span>
           </th>
           <th>
-            <span class="visible-xs">ชื่อ</span>
-            <span class="hidden-xs">ชื่อเล่น</span>
+            <!-- <span class="visible-xs">ชื่อ</span> -->
+            ชื่อเล่น
           </th>
           <th class="hidden-xs">ชื่อ-นามสกุล</th>
           <th>สถานะ</th>
@@ -41,23 +41,21 @@
             <td class="hidden-xs">{{ student.name }}</td>
             <td>
               <img src="assets/img/icon-check.png" ng-if="getDataByStudent(event, student).status">
-            	<img src="assets/img/icon-cross.png" ng-if="!getDataByStudent(event, student).status">
+              <img src="assets/img/icon-cross.png" ng-if="!getDataByStudent(event, student).status">
             </td>
             <td>{{ getDataByStudent(event, student).remark || '-' }}</td>
             <td>
-              <span class="text-nowrap">
-                <a href ng-click="updateEvent(event, student)">
+              <a href ng-click="updateEvent(event, student)">
                   <button type="button" class="btn btn-success btn-xs"><img src="assets/img/icon-edit.png"> แก้ไข</button>
                 </a>
-                <a target="_blank" href="{{ student.facebook }}">
+              <a target="_blank" href="{{ student.facebook }}">
                   <img src="assets/img/logo-facebook.png"> <span class="hidden-xs hidden-sm"> {{ student.facebook }}</span>
                 </a>
-              </span>
 
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-	</div>
+  </div>
 </div>
