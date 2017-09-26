@@ -17,7 +17,8 @@
       <table class="table table-striped">
         <thead>
           <th class="hidden-xs">#</th>
-          <th>รหัสนักศึกษา</th>
+          <th class="hidden-xs">รหัสนักศึกษา</th>
+          <th class="visible-xs">รหัส</th>
           <th>ชื่อเล่น</th>
           <th class="hidden-xs">ชื่อ-นามสกุล</th>
           <th>สถานะ</th>
@@ -28,7 +29,8 @@
         <tbody>
           <tr ng-repeat="student in students | filter: search track by $index">
             <td class="hidden-xs">{{ $index + 1 }}</td>
-            <td><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
+            <td class="hidden-xs"><a ui-sref="studentView({ id: student.id })">{{ student.id }}</a></td>
+            <td class="visible-xs"><a ui-sref="studentView({ id: student.id })">{{ student.id.slice(-3) }}</a></td>
             <td>{{ student.nickname }}</td>
             <td class="hidden-xs">{{ student.name }}</td>
             <td><input type="checkbox" ng-model="status" ng-change="check(student.id, status)" ng-checked="getStatus(student.id)"></td>
