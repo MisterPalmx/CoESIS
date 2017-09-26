@@ -1,2 +1,4 @@
 /node_modules
-/ignore
+
+/config/*
+!/config/default.json
