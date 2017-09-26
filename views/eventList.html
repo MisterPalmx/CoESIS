@@ -11,14 +11,14 @@
       <table class="table table-striped text-nowrap">
         <thead>
           <th>ชื่ออีเว้นต์</th>
-          <th class="hidden-xs hidden-sm">คำอธิบาย</th>
+          <th>คำอธิบาย</th>
           <th>ผู้เข้าร่วม</th>
           <th>วันทีเริ่ม</th>
         </thead>
         <tbody>
           <tr ng-repeat="event in events | filter: search">
             <td><a ui-sref="eventView({ id: event.id })">{{ event.name }}</a></td>
-            <td class="hidden-xs hidden-sm">{{ event.description || '-' }}</td>
+            <td>{{ event.description || '-' }}</td>
             <td>{{ getParticipantsLength(event.participants) }}/{{ students.length }} ({{ getParticipantsLength(event.participants) * 100 / students.length | number:2 }}%)</td>
             <td>{{ event.created | date }}</td>
           </tr>
