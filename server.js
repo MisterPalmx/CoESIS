@@ -2,17 +2,24 @@ var mysql = require('mysql');
 var express = require('express');
 var async = require('async');
 var bodyParser = require('body-parser');
+var config = require('config')
 var app = express();
 
-app.listen(5000);
-console.log('Server is running on http://localhost:5000')
+
+var dbConfig = config.get('database'),
+  appConfig = config.get('app');
+
+app.listen(appConfig.port, () => {
+  console.log('Server is listening on port ' + appConfig.port)
+});
+
 
 var conn = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'CoESIS',
-  connectionLimit: 10
+  host: dbConfig.host,
+  user: dbConfig.user,
+  password: dbConfig.password,
+  database: dbConfig.database,
+  connectionLimit: dbConfig.connectionLimit
 });
 
 app.use(bodyParser.json());
@@ -157,7 +164,6 @@ app.get('/event', (req, res) => {
     })
   })
 })
-
 
 app.post('/event/new', (req, res) => {
   var connection,
