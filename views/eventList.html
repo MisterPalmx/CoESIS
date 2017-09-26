@@ -18,13 +18,15 @@
     <p>
       <table class="table table-striped text-nowrap">
         <thead>
+          <th class="hidden-xs">#</th>
           <th>ชื่ออีเว้นต์</th>
           <th>คำอธิบาย</th>
           <th>ผู้เข้าร่วม</th>
           <th>วันทีเริ่ม</th>
         </thead>
         <tbody>
-          <tr ng-repeat="event in events | filter: search">
+          <tr ng-repeat="event in events | filter: search track by $index">
+            <td class="hidden-xs">{{ $index + 1 }}</td>
             <td><a ui-sref="eventView({ id: event.id })">{{ event.name }}</a></td>
             <td>{{ event.description || '-' }}</td>
             <td>{{ getParticipantsLength(event.participants) }}/{{ students.length }} ({{ getParticipantsLength(event.participants) * 100 / students.length | number:2 }}%)</td>
