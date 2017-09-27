@@ -56,10 +56,13 @@ app.get('/student', (req, res) => {
     }
   ], (err) => {
     if (connection) connection.release();
-    if (err) return res.json({
-      success: false,
-      message: err
-    })
+    if (err) {
+      console.log(err);
+      return res.json({
+        success: false,
+        message: err
+      })
+    }
     res.json({
       success: true,
       data: {
@@ -89,18 +92,28 @@ app.post('/student/new', (req, res) => {
       })
     },
     (callback) => {
-      connection.query('insert into student (id, nickname, name, gender, phone, phone2, address, facebook, registered) values (?, ?, ?, ?, ?, ?, ?, ?, now())', [id, nickname, name, gender, phone, phone2, address, facebook],
+      connection.query('select 1 from student where id = ?', [id],
         (err, response) => {
           if (err) return callback(err);
+          if (response.length) return callback('รหัสนี้มีอยู่ในรายชื่อแล้ว');
           callback();
+        })
+    },
+    (callback) => {
+      connection.query('insert into student (id, nickname, name, gender, phone, phone2, address, facebook, registered) values (?, ?, ?, ?, ?, ?, ?, ?, now())', [id, nickname, name, gender, phone, phone2, address, facebook],
+        (err, response) => {
+          callback(err || null);
         })
     }
   ], (err) => {
     if (connection) connection.release();
-    if (err) return res.json({
-      success: false,
-      message: err
-    })
+    if (err) {
+      console.log(err);
+      return res.json({
+        success: false,
+        message: err
+      })
+    }
     res.json({
       success: true
     })
@@ -140,10 +153,13 @@ app.get('/event', (req, res) => {
     }
   ], (err) => {
     if (connection) connection.release();
-    if (err) return res.json({
-      success: false,
-      message: err
-    })
+    if (err) {
+      console.log(err);
+      return res.json({
+        success: false,
+        message: err
+      })
+    }
     events.forEach((event) => {
       event.password = (event.password != null) // Use boolean instead of showing password
       event.participants = [];
@@ -183,16 +199,18 @@ app.post('/event/new', (req, res) => {
     (callback) => {
       connection.query('insert into event (name, description, password, created) values (?, ?, ?, now())', [name, description, password],
         (err, response) => {
-          if (err) return callback(err);
-          callback();
+          callback(err || null);
         })
     }
   ], (err) => {
     if (connection) connection.release();
-    if (err) return res.json({
-      success: false,
-      message: err
-    })
+    if (err) {
+      console.log(err);
+      return res.json({
+        success: false,
+        message: err
+      })
+    }
     res.json({
       success: true
     })
@@ -231,10 +249,13 @@ app.post('/event/:id/update', (req, res) => {
     }
   ], (err) => {
     if (connection) connection.release();
-    if (err) return res.json({
-      success: false,
-      message: err
-    })
+    if (err) {
+      console.log(err);
+      return res.json({
+        success: false,
+        message: err
+      })
+    }
     console.log(studentId + ' update event#' + id + ' (status = ' + status + ', remark = ' + remark + ')')
     res.json({
       success: true
